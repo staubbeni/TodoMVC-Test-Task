@@ -46,6 +46,11 @@ def test_can_be_deleted(page: Page, add_todo):
         expect(
             page.get_by_test_id("todo-title").filter(has_text="Delete this task")
         ).to_have_count(0)
+    for view in ["All", "Active"]:
+        page.get_by_role("link", name=view).click()
+        expect(
+            page.get_by_test_id("todo-title").filter(has_text="Keep this task")
+        ).to_have_count(1)
 
 
 def test_active_filter(page: Page, add_todo):
